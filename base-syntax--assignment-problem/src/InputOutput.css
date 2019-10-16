@@ -1,0 +1,11 @@
+.UserOutput{
+    margin: 1%;
+    box-shadow: 0 3px 3px #ddd;
+    background-image: linear-gradient(to top, rgb(253, 163, 29), #eee);
+    width: max-content;
+    
+}
+.UserOutput p{
+    margin: 0;
+    padding: 6px 5px;
+}

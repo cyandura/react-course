@@ -6,14 +6,29 @@ import UserOutput from './UserOutput';
 class App extends Component {
 
   state = {
-    username: 'cyandura'
+    username: 'cyandura',
+    upn: 'awecomm'
   }
-  onChangeHandler = (event) => {
-    text = event.target.value;
-
+  onNameChangeHandler = (event) => {
+    this.setState({
+      username: event.target.value,
+      upn: this.state.upn});
+  }
+  onUpnChangeHandler = (event) => {
+    this.setState({
+      username: this.state.username,
+      upn: event.target.value});
   }
   
   render() {
+
+    const style = {
+      boxShadow: '0 3px 3px #ddd',
+      width: 'max-content',
+      padding: '8px',
+      backgroundColor: 'red'
+    };
+
     return (
       <div className="App">
         <ol>
@@ -28,9 +43,18 @@ class App extends Component {
           <li>Add two-way-binding to your input (in UserInput) to also display the starting username</li>
           <li>Add styling of your choice to your components/ elements in the components - both with inline styles and stylesheets</li>
         </ol>
-        <UserInput/>
+
+        <UserInput 
+          style={style}
+          changeName={this.onNameChangeHandler}
+          changeUpn={this.onUpnChangeHandler}
+          name={this.state.username} 
+          upn={this.state.upn}
+          />
         <UserOutput
+
           username={this.state.username}
+          upn={this.state.upn}
         />
       </div>
     );
