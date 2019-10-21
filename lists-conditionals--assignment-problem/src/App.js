@@ -1,16 +1,31 @@
 import React, { Component } from 'react';
+import ValidationComponent from './ValidationComponent';
+import CharComponent from './CharComponent';
 import './App.css';
+
 
 class App extends Component {
 	state = {
-		charCount: 0
+		input: "",
+		charCount: 0,
+		lastChar: ''
 	};
 	onChangeHandler = (event) => {
+		var newInput = event.target.value;
+	
 		this.setState({
-			charCount: event.target.value.length
+			input: newInput,
+			charCount: newInput.length,
+			lastChar: newInput[newInput.length-1]
 		});
+
+		console.log(this.state);
+		
 	}
+
 	render() {
+		var arrayInput = this.state.input.split('');
+		
 		return (
 			<div className="App">
 				<ol>
@@ -24,9 +39,30 @@ class App extends Component {
 				<p>Hint: Keep in mind that JavaScript strings are basically arrays!</p>
 				<input 
 					onChange={this.onChangeHandler}
-
 				/>
+
 				<p>Characters:{this.state.charCount}</p>
+				<ValidationComponent
+					count={this.state.charCount}
+				/>
+				
+				{arrayInput.forEach(function(element){
+					return React.createElement(CharComponent, {letter: "d"})
+					
+				})}
+
+				{/* {React.createElement(CharComponent, {letter: "f"})} */}
+				{/* {arrayInput.map(
+					(l, i) => {
+						React.createElement(CharComponent, {letter: l[i]})
+
+						}
+					
+					)} */}
+
+				<CharComponent
+					letter={this.state.lastChar}
+				/>
 			</div>
 		);
 	}
