@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person';
-import Radium from 'radium'
+
 class App extends Component {
   state = {
     persons: [
@@ -66,19 +66,15 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: 'ipx solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-      //Radium powered Pseudo class(selector) for hover
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
-    };
+    // replaced with a class in the CSS
+    // const style = {
+    //   backgroundColor: 'green',
+    //   color: 'white',
+    //   font: 'inherit',
+    //   border: 'ipx solid blue',
+    //   padding: '8px',
+    //   cursor: 'pointer'
+    // };
 
     let persons = null;
 
@@ -100,30 +96,26 @@ class App extends Component {
           })}
         </div>
       );
-      style.backgroundColor = 'red';
-
-      //Radium powered pseudo selector for :hover
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-      }
+      
     }
 
-    const classes = [];
+    const classlist = [];
     if(this.state.persons.length <= 2){
-      classes.push('red'); //classes will be red
+      classlist.push(classes.red); //classes will be red
     }
 
     if(this.state.persons.length <= 1) {
-      classes.push('bold'); //classes = {'red', 'bold'}
+      classlist.push(classes.bold); //classes = {'red', 'bold'}
     }
+
     return (
-      <div className="App">
+      
+      <div className={classes.App}>
         <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
+        <p className={classlist.join(' ')}>This is really working!</p>
 
         <button 
-          style={style}
+          
           onClick={this.togglePersonsHandler}>Toggle Persons</button>
           {/* Ternary Statement To allow showing div based on conditional*/}
         {/* { 
@@ -150,9 +142,10 @@ class App extends Component {
         
         
       </div>
+      
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
-export default Radium(App);
+export default App;
