@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import classes from './App.css';
-import Person from './Person/Person';
-
+import Person from '../components/Persons/Person/Person';
+//ErrorBoundary is used like a try/catch block in component form
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 class App extends Component {
   state = {
     persons: [
@@ -83,15 +84,16 @@ class App extends Component {
       //Can also use a if outside of the return statement, to handle conditionals
       persons = (
         
-        <div>
+        <div >
           {this.state.persons.map((person, index) => { 
             return <Person 
               click={() => this.deletePersonHandler(index)}
               name= {person.name}
               age={person.age}
               key={person.id}
+              //key was moved to the Error Boundary tag because the key has to be in the outer element in a map function
               changed={(event) => this.nameChangedHandler(event, person.id)} // should make this so react can uniquely id each entry
-
+              className="Person"
             />
           })}
         </div>
@@ -110,7 +112,7 @@ class App extends Component {
 
     return (
       
-      <div className={classes.App}>
+      <div className="App">
         <h1>Hi, I'm a React App</h1>
         <p className={classlist.join(' ')}>This is really working!</p>
 
