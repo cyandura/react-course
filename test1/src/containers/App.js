@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import classes from './App.css';
 import Person from '../components/Persons/Person/Person';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
+
+
 //ErrorBoundary is used like a try/catch block in component form
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 class App extends Component {
@@ -84,41 +88,27 @@ class App extends Component {
       //Can also use a if outside of the return statement, to handle conditionals
       persons = (
         
-        <div >
-          {this.state.persons.map((person, index) => { 
-            return <Person 
-              click={() => this.deletePersonHandler(index)}
-              name= {person.name}
-              age={person.age}
-              key={person.id}
-              //key was moved to the Error Boundary tag because the key has to be in the outer element in a map function
-              changed={(event) => this.nameChangedHandler(event, person.id)} // should make this so react can uniquely id each entry
-              className="Person"
-            />
-          })}
-        </div>
+        
+        <Persons
+          persons={this.state.persons}
+          clicked={this.deletePersonHandler}
+          changed={this.nameChangedHandler}
+        />
+        
       );
       
     }
 
-    const classlist = [];
-    if(this.state.persons.length <= 2){
-      classlist.push(classes.red); //classes will be red
-    }
-
-    if(this.state.persons.length <= 1) {
-      classlist.push(classes.bold); //classes = {'red', 'bold'}
-    }
+    
 
     return (
       
       <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <p className={classlist.join(' ')}>This is really working!</p>
-
-        <button 
-          
-          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+        <Cockpit
+          showPersons={this.state.showPersons} 
+          persons = {this.state.persons}
+          clicked = {this.togglePersonsHandler}
+        />
           {/* Ternary Statement To allow showing div based on conditional*/}
         {/* { 
           this.state.showPersons ? 
