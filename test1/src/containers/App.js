@@ -7,7 +7,13 @@ import Cockpit from '../components/Cockpit/Cockpit';
 
 //ErrorBoundary is used like a try/catch block in component form
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+
 class App extends Component {
+  
+  constructor(props) {
+    super(props);
+    console.log('App.js constructor');
+  }
   state = {
     persons: [
       { id: 'a3wtv' , name: 'Max', age: 28 },
@@ -18,6 +24,19 @@ class App extends Component {
     showPersons: false
   };
 
+  static getDerivedStateFromProps(props, state) {
+    console.log("app.js get derivedstatefrom props", props);
+    return state;
+  }
+
+  //kinda outdated method
+  // componentWillMount(){
+  //   console.log("App.js ComponentDidMount");}
+
+  componentDidMount(){
+    console.log("App.js: componentDidMount");
+    return this.state;
+  }
   switchNameHandler = (newName) => {
     // console.log('Was clicked!');
     // DON'T DO THIS: this.state.persons[0].name = 'Maximilian';
@@ -71,6 +90,7 @@ class App extends Component {
   }
 
   render() {
+    console.log("App.js render");
     // replaced with a class in the CSS
     // const style = {
     //   backgroundColor: 'green',
@@ -102,15 +122,21 @@ class App extends Component {
     
 
     return (
-      
       <div className="App">
         <Cockpit
+          //prop set in the index.js file
+          title={this.props.appTitle}
           showPersons={this.state.showPersons} 
           persons = {this.state.persons}
           clicked = {this.togglePersonsHandler}
         />
-          {/* Ternary Statement To allow showing div based on conditional*/}
-        {/* { 
+        {persons}
+      </div>
+    );
+
+
+          /* Ternary Statement To allow showing div based on conditional*/
+        /* { 
           this.state.showPersons ? 
             <div>
               <Person
@@ -129,13 +155,7 @@ class App extends Component {
                 age={this.state.persons[2].age}
               />
             </div> : null
-        } */}
-        {persons}
-        
-        
-      </div>
-      
-    );
+        } */
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }

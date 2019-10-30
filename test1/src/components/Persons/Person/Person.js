@@ -1,23 +1,27 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import classes from './Person.css';
 
-const person = (props) => {
-    const style = {
-        '@media(minWidth: 500px': {
-            width: '450px'
-        }
-    };
+class Person extends Component {
+    // style = {
+    //     '@media(minWidth: 500px': {
+    //         width: '450px'
+    //     }
+    // };
 
-    return (
-        
-        <div className="Person" style={style}>
-            <p onClick={props.click} > Im a person and i am {props.name} and {props.age} years old!</p>
-            <p>{props.children}</p>
-            <input type="text" onChange={props.changed} value={props.name} />
-        </div>
-        
-    )
+    render(){
+        console.log('Person.js: rendering...')
+        return (
+            
+            <div className="Person" >
+                <p onClick={this.props.click} > Im a person and i am {this.props.name} and {this.props.age} years old!</p>
+                <p>{this.props.children}</p>
+                <input type="text" onChange={this.props.changed} value={this.props.name} />
+            </div>
+            
+        )
+    }
+    
 }
 
-export default person;
+export default Person;
