@@ -3,6 +3,8 @@ import classes from './App.css';
 import Person from '../components/Persons/Person/Person';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import withClass from '../hoc/withClass';
+import Aux from "../hoc/Auxiliary";
 
 
 //ErrorBoundary is used like a try/catch block in component form
@@ -21,7 +23,8 @@ class App extends Component {
       { id: 'uyert' ,name: 'Stephanie', age: 26 }
     ],
     otherState: 'some other value',
-    showPersons: false
+    showPersons: false,
+    showCockpit: true
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -36,6 +39,12 @@ class App extends Component {
   componentDidMount(){
     console.log("App.js: componentDidMount");
     return this.state;
+  }
+  // if it returns true, react reenders the entire componenet tree, everytime something changes in the component.
+  // doenst update the DOM, it checks if it should update the real dom internally
+  shouldComponentUpdate(nextProps, nextState){
+    console.log("{App.js}: shouldComponentUpdate");
+    return true;
   }
   switchNameHandler = (newName) => {
     // console.log('Was clicked!');
@@ -122,16 +131,23 @@ class App extends Component {
     
 
     return (
-      <div className="App">
-        <Cockpit
-          //prop set in the index.js file
-          title={this.props.appTitle}
-          showPersons={this.state.showPersons} 
-          persons = {this.state.persons}
-          clicked = {this.togglePersonsHandler}
-        />
+      <Aux>
+        <button onClick={
+          () => {this.setState({showCockpit: false});}
+        }>
+        Remove Cockpit
+        </button>
+        {this.state.showCockpit ? (
+          <Cockpit
+            //prop set in the index.js file
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons} 
+            persons = {this.state.persons.length}
+            clicked = {this.togglePersonsHandler}
+          />
+        ): null}
         {persons}
-      </div>
+      </Aux>
     );
 
 
@@ -160,4 +176,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withClass(App, classes.App);

@@ -1,9 +1,10 @@
 import Person from './Person/Person';
-import React, { Component} from 'react';
+import React, { Component, PureComponent} from 'react';
 
 //ES6 arrow function notation you can omit the return statement
 
-class Persons extends Component {
+//Purecomponent is a component that already implements the shouldComponentupdate with a complete props check
+class Persons extends PureComponent {
 
   //makes no sense to use if we dont have inital state
   // static getDerivedStateFromProps(props,state){
@@ -13,7 +14,15 @@ class Persons extends Component {
 
   shouldComponentUpdate(nextProps, nextState){
     console.log("Persons.js : Should Component Update")
-    return true;
+    // this if saves a wasted rerender, optimization
+    if(nextProps.persons !== this.props.persons || 
+        nextProps.changed !== this.props.changed || 
+        nextProps.clicked !== this.props.clicked){
+        return true;
+    } else{
+        return false;
+    }
+    
   }
   getSnapshotBeforeUpdate(prevProps, prevState){
     console.log("Persons.js getSnapshotBeforeUpdate");
@@ -24,6 +33,8 @@ class Persons extends Component {
   componentDidUpdate(){
     console.log("Persons.js componentDidUpdate");
   }
+
+  //componentwillunmount runs right before the component is removed
   componentWillUnmount(){
     console.log("Persons.js ComponetWillUnmount");
   }
