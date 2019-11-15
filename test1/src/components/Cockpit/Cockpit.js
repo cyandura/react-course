@@ -1,6 +1,6 @@
     import React, {useEffect} from 'react';
     import classes from './Cockpit.css';
-
+    import AuthContext from '../../context/auth-context';
 
     
 
@@ -57,6 +57,9 @@
             <button 
                 onClick={props.clicked}>Toggle Persons
             </button>
+            <AuthContext.Consumer>
+                {(context) => <button onClick={context.login}>Log In</button>}
+            </AuthContext.Consumer>
 
         </div>
         );

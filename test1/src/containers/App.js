@@ -5,7 +5,7 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/withClass';
 import Aux from "../hoc/Auxiliary";
-
+import AuthContext from '../context/auth-context';
 
 //ErrorBoundary is used like a try/catch block in component form
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
@@ -24,7 +24,8 @@ class App extends Component {
     ],
     otherState: 'some other value',
     showPersons: false,
-    showCockpit: true
+    showCockpit: true,
+    authenticated: false
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -122,6 +123,7 @@ class App extends Component {
           persons={this.state.persons}
           clicked={this.deletePersonHandler}
           changed={this.nameChangedHandler}
+          isAuthenticated = {this.state.authenticated}
         />
         
       );
@@ -137,16 +139,18 @@ class App extends Component {
         }>
         Remove Cockpit
         </button>
-        {this.state.showCockpit ? (
-          <Cockpit
-            //prop set in the index.js file
-            title={this.props.appTitle}
-            showPersons={this.state.showPersons} 
-            persons = {this.state.persons.length}
-            clicked = {this.togglePersonsHandler}
-          />
-        ): null}
-        {persons}
+        <AuthContext.Provider value = {{authenticated: this.state.authenticated, login: this.LoginHandler}}>
+          {this.state.showCockpit ? (
+            <Cockpit
+              //prop set in the index.js file
+              title={this.props.appTitle}
+              showPersons={this.state.showPersons} 
+              persons = {this.state.persons.length}
+              clicked = {this.togglePersonsHandler}
+            />
+          ): null}
+          {persons}
+        </AuthContext.Provider>
       </Aux>
     );
 
